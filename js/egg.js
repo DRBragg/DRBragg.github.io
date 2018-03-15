@@ -1,45 +1,20 @@
-const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
-let userCode = []
+// Just a little fun for my landing page
+const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+let userCode = [];
 
+const keyCheck = (key, index) => konamiCode[index] === key ? userCode.push(key) : reset();
 
-const keyCheck = key => konamiCode.includes(key) ? userCode.push(key) : false
-
-const sequenceCheck = function () {
-  let i = 0
-  while (i < userCode.length) {
-    let isClean = codeCheck(i)
-    if (isClean) {
-      if (i === userCode.length - 1) {
-        return true
-      } else {
-        i++
-      }
-    } else {
-      return false
-    }
-  }
-}
-
-const codeCheck = index => userCode[index] === konamiCode[index]
-
-const reset = () => userCode = []
+const reset = () => userCode = [];
 
 const userInput = function (e) {
-  let keyPressed = e.keyCode
-  let check = keyCheck(keyPressed)
-  if (check && check === konamiCode.length) {
-    success()
-  } else {
-    let progress = sequenceCheck()
-    if (!progress) {
-      reset()
-    }
-  }
-}
+  let check = keyCheck(e.keyCode, userCode.length);
+  check > 0 ? check === konamiCode.length ? success() : console.log('keep going') : console.log('womp womp');
+};
 
-const success =  function () {
+const success = function () {
   document.getElementById('style').setAttribute('href', 'css/themes/flyers.css');
-  document.querySelector('#hobby').innerText = 'Flyers Fan'
-}
+  document.querySelector('#hobby').innerText = 'Flyers Fan';
+  reset();
+};
 
-document.addEventListener("keyup", userInput)
+document.addEventListener('keyup', userInput);
